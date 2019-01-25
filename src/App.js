@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 class App extends Component {
   state = {
@@ -41,53 +42,45 @@ class App extends Component {
 
   render() {
 
-    const style = {
-      backgroundColor : 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid grey',
-      padding: '8px',
-      cursor: 'pointer'
-    };
-
     let persons = null;
+    let btnClass = null;
 
     if(this.state.showPersons){
       persons = (
         <div>
           {this.state.persons.map((person,index) => {
-            return <Person 
+            return <ErrorBoundary key={person.id}>
+            <Person 
                       click = {() => this.deletePersonHandler(index)}
                       name={person.name}
                       age={person.age}
-                      key={person.id}
                       changed={(event) => this.nameChangedHandler(event, person.id)}/>
+            </ErrorBoundary>          
           })}
           
         </div>
-      )
+      )  
 
-      style.backgroundColor = 'red';
-      
+      btnClass = classes.Red;
     }
 
-    const classes = [];
+    const assginedClasses = [];
 
     if(this.state.persons.length <= 2){
-      classes.push('red');
+      assginedClasses.push( classes.red);
     }
     if(this.state.persons.length <= 1){
-      classes.push('bold');
+      assginedClasses.push( classes.bold );
     }
 
     return (
-      <div className="App">
+      <div className={classes.App}>
 
         <h1>Hey React, Ssup</h1>
-        <p className={ classes.join(' ') }>This is working</p>
+        <p className={ assginedClasses.join(' ') }>This is working</p>
 
-        <button 
-          style={style}
+        <button
+          className = {btnClass}
           onClick={this.togglePersonsHandler}>Toggle Persons</button>
 
         { persons }    
