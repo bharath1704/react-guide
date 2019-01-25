@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-
-import Person from './Person/Person'
+import Person from './Person/Person';
 
 class App extends Component {
   state = {
@@ -43,12 +42,13 @@ class App extends Component {
   render() {
 
     const style = {
-      backgroundColor : 'white',
+      backgroundColor : 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid grey',
       padding: '8px',
       cursor: 'pointer'
-    }
+    };
 
     let persons = null;
 
@@ -66,13 +66,25 @@ class App extends Component {
           
         </div>
       )
+
+      style.backgroundColor = 'red';
+      
+    }
+
+    const classes = [];
+
+    if(this.state.persons.length <= 2){
+      classes.push('red');
+    }
+    if(this.state.persons.length <= 1){
+      classes.push('bold');
     }
 
     return (
       <div className="App">
 
         <h1>Hey React, Ssup</h1>
-        <p>This is working</p>
+        <p className={ classes.join(' ') }>This is working</p>
 
         <button 
           style={style}
